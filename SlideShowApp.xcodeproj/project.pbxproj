@@ -11,6 +11,8 @@
 		EC767C7F2BF876CB006B3555 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC767C7E2BF876CB006B3555 /* ContentView.swift */; };
 		EC767C812BF876CC006B3555 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC767C802BF876CC006B3555 /* Assets.xcassets */; };
 		EC767C842BF876CC006B3555 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC767C832BF876CC006B3555 /* Preview Assets.xcassets */; };
+		EC767C8B2BF8770C006B3555 /* SlideShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC767C8A2BF8770C006B3555 /* SlideShow.swift */; };
+		EC767C8D2BF87AF8006B3555 /* GZLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC767C8C2BF87AF8006B3555 /* GZLog.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		EC767C7E2BF876CB006B3555 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EC767C802BF876CC006B3555 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC767C832BF876CC006B3555 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		EC767C8A2BF8770C006B3555 /* SlideShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShow.swift; sourceTree = "<group>"; };
+		EC767C8C2BF87AF8006B3555 /* GZLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GZLog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +55,10 @@
 		EC767C7B2BF876CB006B3555 /* SlideShowApp */ = {
 			isa = PBXGroup;
 			children = (
+				EC767C8C2BF87AF8006B3555 /* GZLog.swift */,
 				EC767C7C2BF876CB006B3555 /* SlideShowAppApp.swift */,
 				EC767C7E2BF876CB006B3555 /* ContentView.swift */,
+				EC767C8A2BF8770C006B3555 /* SlideShow.swift */,
 				EC767C802BF876CC006B3555 /* Assets.xcassets */,
 				EC767C822BF876CC006B3555 /* Preview Content */,
 			);
@@ -137,6 +143,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC767C8B2BF8770C006B3555 /* SlideShow.swift in Sources */,
+				EC767C8D2BF87AF8006B3555 /* GZLog.swift in Sources */,
 				EC767C7F2BF876CB006B3555 /* ContentView.swift in Sources */,
 				EC767C7D2BF876CB006B3555 /* SlideShowAppApp.swift in Sources */,
 			);
