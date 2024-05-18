@@ -151,7 +151,7 @@ struct SlideShow: View {
             .clipped()
             .padding(32)
         }
-        .frame(height: 300)
+        .frame(height: 500)
         .background(.red.opacity(0.3))
         EmptyView()
     }
