@@ -14,7 +14,6 @@ struct SlideShow: View {
     @State var draggingOffsetX: CGFloat = 0
     @State private var startTime: Date?
     @State var size: CGSize = .zero
-    @State var size1: CGSize = .zero
 
     let colors: [Color] = [.red, .green, .blue, .orange, .purple]
     
@@ -24,8 +23,8 @@ struct SlideShow: View {
         VStack {
             Text("page : \(currentIndex)")
             Text("offsetX : \(offsetX + draggingOffsetX)")
-            Text("size: \(size.width) x \(size.height)")
-            Text("size1: \(size1.width) x \(size1.height)")
+            Text("sizeX : \(size.width / 2)")
+            Text("centerX : \(centerX)")
             GeometryReader(content: { geometry in
                 HStack(spacing: 0) {
                     if views.isEmpty {
@@ -39,8 +38,10 @@ struct SlideShow: View {
                                     .frame(height: geometry.size.height)
                                     .background(colors[index % 5])
                                     .contentShape(Rectangle())
-//                                    .scaleEffect(index == currentIndex ? 1 : 0.8)
-                                    .padding(.leading, index == 0 ? geometry.size.width / 3 / 2 : 0)
+                                    .scaleEffect(scaleOf(index: index))
+                                    .opacity(opacityOf(index: index))
+                                    .padding(.leading,
+                                             index == 0 ? geometry.size.width / 3 / 2 : 0)
                             }
                         }
                         .offset(.init(width: offsetX + draggingOffsetX, height: 0))
@@ -92,7 +93,6 @@ struct SlideShow: View {
                                 }
                             }
                         }
-                        GZLogFunc("No Swipe")
 
                         if swiped == false {
                             if abs(value.predictedEndTranslation.width) > geometry.size.width / 2 {
@@ -109,9 +109,8 @@ struct SlideShow: View {
                             }
                         }
                         withAnimation {
-                            offsetX = CGFloat(currentIndex) * geometry.size.width * 2 / 3 + contentSpacing * CGFloat(currentIndex - 1)
-                            offsetX *= -1
                             draggingOffsetX = 0
+                            offsetX = -(CGFloat(currentIndex) * geometry.size.width * 2 / 3 + contentSpacing * CGFloat(currentIndex))
                         }
                     }
                 )
@@ -124,6 +123,45 @@ struct SlideShow: View {
             })
             .readSize($size)
         }
+    }
+    
+    var centerX: CGFloat {
+        if currentIndex > 0 {
+            size.width / 3 / 2 + size.width * 2 / 3 / 2 + size.width * 2 / 3  * CGFloat(currentIndex) + contentSpacing * CGFloat(currentIndex)
+        }
+        else {
+            size.width / 3 / 2 + size.width * 2 / 3 / 2
+        }
+    }
+    
+    func centerXOf(index: Int) -> CGFloat {
+        if index > 0 {
+            size.width / 3 / 2 + size.width * 2 / 3 / 2 + size.width * 2 / 3  * CGFloat(index) + contentSpacing * CGFloat(index) + draggingOffsetX
+        }
+        else {
+            size.width / 3 / 2 + size.width * 2 / 3 / 2 + draggingOffsetX
+        }
+    }
+    
+    func scaleOf(index: Int) -> CGFloat {
+        
+        let dist = abs(centerX - centerXOf(index: index))
+//        if index == 1 {
+//            let a = min(dist / size.width * 0.7, 1)
+//            GZLogFunc(centerX)
+//            GZLogFunc(centerXOf(index: index))
+//        }
+        return 1 - min(dist / size.width * 0.2, 1)
+    }
+    func opacityOf(index: Int) -> CGFloat {
+        
+        let dist = abs(centerX - centerXOf(index: index))
+//        if index == 1 {
+//            let a = min(dist / size.width * 0.7, 1)
+//            GZLogFunc(centerX)
+//            GZLogFunc(centerXOf(index: index))
+//        }
+        return 1 - min(dist / size.width * 0.3, 1)
     }
 }
 
