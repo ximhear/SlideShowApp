@@ -74,20 +74,22 @@ struct SlideShow: View {
                         
                         var swiped = false
                         
+                        var newIndex = currentIndex
+                        
                         if abs(dragDistance.width) > abs(dragDistance.height) {
                             // 가로 스와이프
                             if abs(dragDistance.width) > minimumDistance && speed > minimumSpeed {
                                 if dragDistance.width < 0 {
                                     // Left swipe
-                                    if currentIndex < views.count-1 {
-                                        currentIndex += 1
+                                    if newIndex < views.count-1 {
+                                        newIndex += 1
                                     }
                                     swiped = true
                                 } else {
                                     // Right swipe
                                     GZLogFunc("Swiped Right")
-                                    if currentIndex > 0 {
-                                        currentIndex -= 1
+                                    if newIndex > 0 {
+                                        newIndex -= 1
                                     }
                                     swiped = true
                                 }
@@ -97,20 +99,21 @@ struct SlideShow: View {
                         if swiped == false {
                             if abs(value.predictedEndTranslation.width) > geometry.size.width / 2 {
                                 if value.predictedEndTranslation.width > 0 {
-                                    if currentIndex > 0 {
-                                        currentIndex -= 1
+                                    if newIndex > 0 {
+                                        newIndex -= 1
                                     }
                                 }
                                 else {
-                                    if currentIndex < views.count-1 {
-                                        currentIndex += 1
+                                    if newIndex < views.count-1 {
+                                        newIndex += 1
                                     }
                                 }
                             }
                         }
                         withAnimation {
+                            currentIndex = newIndex
                             draggingOffsetX = 0
-                            offsetX = -(CGFloat(currentIndex) * geometry.size.width * 2 / 3 + contentSpacing * CGFloat(currentIndex))
+                            offsetX = -(CGFloat(newIndex) * geometry.size.width * 2 / 3 + contentSpacing * CGFloat(newIndex))
                         }
                     }
                 )
