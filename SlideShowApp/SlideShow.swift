@@ -146,21 +146,23 @@ struct SlideShow: View {
     func scaleOf(index: Int) -> CGFloat {
         
         let dist = abs(centerX - centerXOf(index: index))
-//        if index == 1 {
+        if index == 1 {
 //            let a = min(dist / size.width * 0.7, 1)
 //            GZLogFunc(centerX)
 //            GZLogFunc(centerXOf(index: index))
-//        }
+            GZLogFunc(1 - min(dist / size.width * 0.2, 1))
+        }
         return 1 - min(dist / size.width * 0.2, 1)
     }
     func opacityOf(index: Int) -> CGFloat {
         
         let dist = abs(centerX - centerXOf(index: index))
-//        if index == 1 {
+        if index == 1 {
 //            let a = min(dist / size.width * 0.7, 1)
 //            GZLogFunc(centerX)
 //            GZLogFunc(centerXOf(index: index))
-//        }
+//            GZLogFunc(1 - min(dist / size.width * 0.3, 1))
+        }
         return 1 - min(dist / size.width * 0.3, 1)
     }
 }
