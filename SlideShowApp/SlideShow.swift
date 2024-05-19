@@ -17,7 +17,11 @@ struct SlideShow: View {
 
     let colors: [Color] = [.red, .green, .blue, .orange, .purple]
     
-    let  contentSpacing: CGFloat = 4
+    let contentSpacing: CGFloat = 4
+    
+    var realOffsetX: CGFloat {
+        return offsetX + draggingOffsetX
+    }
     
     var body: some View {
         VStack {
@@ -44,22 +48,18 @@ struct SlideShow: View {
                                              index == 0 ? geometry.size.width / 3 / 2 : 0)
                             }
                         }
-                        .offset(.init(width: offsetX + draggingOffsetX, height: 0))
+                        .offset(.init(width: realOffsetX, height: 0))
                         .clipped()
                     }
                 }
                 .gesture(DragGesture()
                     .onChanged { value in
-                    GZLogFunc(value.translation.width)
                         draggingOffsetX = value.translation.width
                         if startTime == nil {
                             startTime = Date()
                         }
                     }
                     .onEnded { value in
-                        GZLogFunc(value.translation.width)
-                        GZLogFunc(value.predictedEndTranslation.width)
-                        
                         let endTime = Date()
                         guard let startTime = startTime else { return }
                         let duration = endTime.timeIntervalSince(startTime)
@@ -87,7 +87,6 @@ struct SlideShow: View {
                                     swiped = true
                                 } else {
                                     // Right swipe
-                                    GZLogFunc("Swiped Right")
                                     if newIndex > 0 {
                                         newIndex -= 1
                                     }
@@ -110,7 +109,8 @@ struct SlideShow: View {
                                 }
                             }
                         }
-                        withAnimation {
+                        
+                        withAnimation(.easeOut(duration: 0.35)) { // 애니메이션 시간을 0.35초로 변경
                             currentIndex = newIndex
                             draggingOffsetX = 0
                             offsetX = -(CGFloat(newIndex) * geometry.size.width * 2 / 3 + contentSpacing * CGFloat(newIndex))
@@ -118,8 +118,6 @@ struct SlideShow: View {
                     }
                 )
                 .onChange(of: offsetX, { oldValue, newValue in
-                    GZLogFunc(offsetX)
-                    GZLogFunc(geometry.size.width)
                 })
                 .background(Color.yellow.opacity(0.3))
                 .frame(maxWidth: .infinity)
@@ -149,23 +147,11 @@ struct SlideShow: View {
     func scaleOf(index: Int) -> CGFloat {
         
         let dist = abs(centerX - centerXOf(index: index))
-        if index == 1 {
-//            let a = min(dist / size.width * 0.7, 1)
-//            GZLogFunc(centerX)
-//            GZLogFunc(centerXOf(index: index))
-            GZLogFunc(1 - min(dist / size.width * 0.2, 1))
-        }
         return 1 - min(dist / size.width * 0.2, 1)
     }
     func opacityOf(index: Int) -> CGFloat {
         
         let dist = abs(centerX - centerXOf(index: index))
-        if index == 1 {
-//            let a = min(dist / size.width * 0.7, 1)
-//            GZLogFunc(centerX)
-//            GZLogFunc(centerXOf(index: index))
-//            GZLogFunc(1 - min(dist / size.width * 0.3, 1))
-        }
         return 1 - min(dist / size.width * 0.3, 1)
     }
 }
